@@ -9,30 +9,9 @@
   }
 {%- endstyle -%}
 
-<div class="collection-hero{% if section.settings.show_collection_image and collection.image %} collection-hero--with-image{% endif %} color-{{ section.settings.color_scheme }} gradient" {% if collection.template_suffix contains 'offertforfragan' %}style="text-align: center;"{% endif %}>
-  <div class="collection-hero__inner page-width">
-    <div class="collection-hero__text-wrapper" {% if collection.template_suffix contains 'offertforfragan' %}style="flex-basis: 100%; padding-right: 0; padding-bottom: 2rem;"{% endif %}>
-      {% if collection.metafields.my_fields.show_collection_icon == true %}
-      <div class="c-collection-icon">
-          {% if collection.handle contains 'barbara-datorer' %}
-            {% render 'icon-barbara-datorer' %}  
-          {% elsif collection.handle contains 'stationara-datorer' %}
-            {% render 'icon-stationara-datorer' %}  
-          {% elsif collection.handle contains 'natverk' %}
-            {% render 'icon-natverk' %}  
-          {% elsif collection.handle contains 'server-lagring' %}
-            {% render 'icon-server-lagring' %}  
-          {% elsif collection.handle contains 'print' %}
-            {% render 'icon-print' %}  
-          {% elsif collection.handle contains 'surfplattor-mobiltelefoner' %}
-            {% render 'icon-surfplattor-mobiltelefoner' %}  
-          {% elsif collection.handle contains 'utgangna-produkter-eol' %}
-            {% render 'icon-utgangna-produkter-eol' %}  
-          {% elsif collection.handle contains 'komponenter-reservdelar' %}
-            {% render 'icon-komponenter-reservdelar' %}          
-          {% endif %}
-        </div>
-        {% endif %}
+<div class="collection-hero{% if section.settings.show_collection_image and collection.image %} collection-hero--with-image{% endif %} color-{{ section.settings.color_scheme }} gradient">
+  <div class="collection-hero__inner page-width {% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+    <div class="collection-hero__text-wrapper">
       <h1 class="collection-hero__title">
         <span class="visually-hidden">{{ 'sections.collection_template.title' | t }}: </span>
         {{- collection.title | escape -}}
@@ -43,26 +22,26 @@
       {%- endif -%}
     </div>
 
-    {% unless collection.template_suffix contains 'offertforfragan' %}
     {%- if section.settings.show_collection_image and collection.image -%}
       <div class="collection-hero__image-container media gradient">
         <img
-          srcset="{%- if collection.image.width >= 165 -%}{{ collection.image | image_url: width: 165 }} 165w,{%- endif -%}
+          srcset="
+            {%- if collection.image.width >= 165 -%}{{ collection.image | image_url: width: 165 }} 165w,{%- endif -%}
             {%- if collection.image.width >= 360 -%}{{ collection.image | image_url: width: 360 }} 360w,{%- endif -%}
             {%- if collection.image.width >= 535 -%}{{ collection.image | image_url: width: 535 }} 535w,{%- endif -%}
             {%- if collection.image.width >= 750 -%}{{ collection.image | image_url: width: 750 }} 750w,{%- endif -%}
             {%- if collection.image.width >= 1070 -%}{{ collection.image | image_url: width: 1070 }} 1070w,{%- endif -%}
             {%- if collection.image.width >= 1500 -%}{{ collection.image | image_url: width: 1500 }} 1500w,{%- endif -%}
-            {{ collection.image | image_url }} {{ collection.image.width }}w"
+            {{ collection.image | image_url }} {{ collection.image.width }}w
+          "
           src="{{ collection.image | image_url: width: 750 }}"
           sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | divided_by: 2 }}px, (min-width: 750px) calc(50vw - 130px), calc(50vw - 55px)"
-          alt="{{ collection.title | escape }}"
+          alt=""
           width="{{ collection.image.width }}"
           height="{{ collection.image.height }}"
         >
       </div>
     {%- endif -%}
-    {% endunless %}
   </div>
 </div>
 
@@ -89,32 +68,10 @@
       "info": "t:sections.main-collection-banner.settings.show_collection_image.info"
     },
     {
-      "type": "select",
+      "type": "color_scheme",
       "id": "color_scheme",
-      "options": [
-        {
-          "value": "accent-1",
-          "label": "t:sections.all.colors.accent_1.label"
-        },
-        {
-          "value": "accent-2",
-          "label": "t:sections.all.colors.accent_2.label"
-        },
-        {
-          "value": "background-1",
-          "label": "t:sections.all.colors.background_1.label"
-        },
-        {
-          "value": "background-2",
-          "label": "t:sections.all.colors.background_2.label"
-        },
-        {
-          "value": "inverse",
-          "label": "t:sections.all.colors.inverse.label"
-        }
-      ],
-      "default": "background-1",
-      "label": "t:sections.all.colors.label"
+      "label": "t:sections.all.colors.label",
+      "default": "background-1"
     }
   ]
 }
