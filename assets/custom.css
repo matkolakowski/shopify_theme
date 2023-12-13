@@ -1,0 +1,149 @@
+/*
+Custom Styling for cirkulerad.se
+*/
+
+/* Custom fonts */
+
+p,
+span,
+input,
+a {
+    font-family: 'Roboto Flex', sans-serif;
+    font-weight: 300;
+}
+
+h1,
+h2,
+h3,
+h4,
+.h1,
+.h2,
+.h3,
+.h4 {
+    font-family: 'Days One', sans-serif;
+    letter-spacing: .025rem !important;
+    font-weight: normal;
+}
+
+.header__inline-menu span {
+    font-weight: 500;
+    font-size: 110%;
+}
+
+.text-center {
+    text-align: center !important;
+}
+
+.text-white {
+    color: #ffffff !important;
+}
+
+.m-0 {
+    margin: 0 !important;
+}
+
+.mt-0 {
+    margin-top: 0 !important;
+}
+
+.p-0 {
+    padding: 0 !important;
+}
+
+.button--custom-1 {}
+
+.button--custom-2 {}
+
+.custom-link {
+    font-weight: 700!important;
+    margin-bottom: 1rem; text-decoration: none; font-size: inherit;    
+}
+
+.menu-drawer__menu li svg { width: auto; height: 3.5rem; margin-right: 10px;}
+
+/*  collapsible-content.liquid - Custom  */
+
+.collaps-buttons {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+    gap: 25px;
+    text-align: center;
+}
+
+.collaps-link {
+    min-width: 150px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.select__select {
+    font-size: 1.6rem!important;
+}
+
+select#subject {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' aria-hidden='true' focusable='false' role='presentation' class='icon icon-caret' viewBox='0 0 10 6'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M9.354.646a.5.5 0 00-.708 0L5 4.293 1.354.646a.5.5 0 00-.708.708l4 4a.5.5 0 00.708 0l4-4a.5.5 0 000-.708z' fill='currentColor'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: 97%;
+    background-size: 20px;
+}
+
+/* contact forms */
+.contact_subheading p {
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+/* Slider mobile navigation */
+
+.slider-buttons {
+    display: none !important;
+}
+
+/* @media screen and (max-width: 749px) {
+    .slider.slider--mobile .slider__slide {
+        padding-bottom: 0 !important;
+    }
+
+} */
+
+/* Center mobile styling */
+
+@media screen and (max-width: 749px) {
+
+    .h1,
+    .h2,
+    .footer .grid,
+    .contact_subheading p,
+    .c-collection-icon,
+    .collection-hero__title,
+    .collection-hero__description.rte {
+        text-align: center !important;
+    }
+
+    .collaps-buttons,
+    .title-wrapper-with-link {
+        justify-content: center;
+    }
+
+    .footer-block__details-content li {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    }
+
+    
+
+}
+
+/* Collection featured */
+.card--card.card--media > .card__content {background-color: #0a9e4d; border-radius: 0 0 10px 10px;}
+.card--card.card--media > .card__content .card__heading a {color: #ffffff; font-size: 18px; font-weight: 500;}
+
+/* Collection page */
+.c-collection-icon svg {width: 10rem; height: auto;}
+.c-collection-card-icon svg {height: 5rem; width: auto;}
+
+.border-10 {border-radius: 10px!important;}
+.p-0 {padding: 0!important;}
