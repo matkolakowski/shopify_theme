@@ -1,0 +1,17 @@
+{%- comment -%}IceCat manual installation step 1 {%- endcomment -%}
+{% for variant in product.variants %}{% assign product_barcode = variant.barcode %}{% endfor %}
+{% assign icecatsetting = shop.metafields.icecatsettings %}
+{% assign icecatlang = shop.metafields.icecatlang %}
+{% assign shopify_shopID = shop.metafields.shopify_shopID %}
+{% for icecat_value in product.metafields.mfgdata["icecat"] %} 
+{% assign mfg_number = icecat_value[1]["mfg_number"] %}
+{% assign mfg_brand = icecat_value[1]["mfg_brand"] %}
+{% endfor %}
+<script src="https://app.icecat.webilly.com/public/js/icecat_functions.js"></script>
+<script type="text/javascript">
+document.onreadystatechange = () => {
+    if (document.readyState === "complete") {
+        getIcecatData("{{ product.id }}","{{ icecatsetting.username }}","{{ mfg_number }}","{{ mfg_brand }}", window.location.host,"{{ product_barcode }}","{{ shopify_shopID.shopify_shopID }}","{{ icecatlang.icecat_lang}}")
+    }
+};
+</script>

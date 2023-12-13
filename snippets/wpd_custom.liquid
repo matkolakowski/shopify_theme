@@ -1,0 +1,181 @@
+{% assign wcp_wholesale_customer = false %}
+{% if shop.metafields.wcp_status.wcp_status != 'disabled' and customer %}
+{% assign active_discounts = shop.metafields.wcp_active_discounts.wcp_active_discounts %}
+{% assign active_discounts_array = active_discounts | split: ',' %}
+{% assign customer_tags = blank %}
+{% for tag in customer.tags %}
+{% assign tempTag = tag | downcase %}
+{% assign customer_tags = customer_tags | prepend:tempTag %}
+{% unless forloop.last %}
+{% assign customer_tags = customer_tags | prepend:',' %}
+{% endunless %}
+{% endfor %}
+{% assign customer_tags = customer_tags | split:',' %}
+{% assign active_discounts = active_discounts | downcase %}
+{% for discount_key in active_discounts_array %}
+{% assign key_split = discount_key | split: '-' %}
+{% assign key_split_length = key_split | size %}
+{% if key_split_length > 2 %}
+{% assign removeable_key = key_split.last | prepend: '-' %}
+{% assign wcp_customer_tag = discount_key | remove_last: removeable_key %}
+{% else %}
+{% assign wcp_customer_tag = key_split[0] %}
+{% endif %}
+{% assign wcp_customer_tag = wcp_customer_tag | downcase %}
+{% if customer_tags contains wcp_customer_tag %}
+{% assign wcp_wholesale_customer = true %}
+{% endif %}
+{% endfor %}
+{% endif %}
+
+
+
+
+
+{% if canonical_url contains "/cart" %}
+  {% if wcp_wholesale_customer == true %}
+
+<script>
+  window.addEventListener("DOMContentLoaded", (event) => {
+  
+    const translateData = [{
+      
+          English: "Enter Billing Email *",
+          Swedish: "E-post fakturamottagare"
+      },
+     {
+          English: "Shipping Notes",
+          Swedish: "Information till transportör"
+      },
+     {
+          English: "Shipping address",
+          Swedish: "Leveransadress"
+      },
+                           {
+          English: "Available Leveransadress",
+          Swedish: "Valbara Leveranadress"
+      },
+                           {
+          English: "Enter Purchase Order Number",
+          Swedish: "Inköpsordernummer"
+      },
+                           {
+          English: "Select Delivery Date *",
+          Swedish: "Välj önskat leveransdatum"
+      },
+                           {
+          English: "Select Payment Option",
+          Swedish: "Välj betalsätt"
+      },
+      {
+          English: "Billing address is the same as shipping address",
+          Swedish: "Fakturaadress samma som leveransadress"
+      }, 
+                           {
+          English: "Place Order",
+          Swedish: "Lägg order"
+      }  ,{
+          English: "Company",
+          Swedish: "Företag"
+      }  ,{
+          English: "Apartment, suite, etc.",
+          Swedish: "Övrig adress information"
+      },
+                           {
+          English: "First Name *",
+          Swedish: "Förnamn"
+      },
+                           {
+          English: "Last Name *",
+          Swedish: "Efternamn"
+      },
+      {
+          English: "Phone",
+          Swedish: "Telefonnummer"
+      }, 
+                           {
+          English: "Address *",
+          Swedish: "Adress"
+      }  ,{
+          English: "City *",
+          Swedish: "Ort"
+      }  ,{
+          English: "ZIP/Postal code *",
+          Swedish: "Postnummer"
+      },{
+          English: "Fetch shipping rates",
+          Swedish: "Frakt alternativ"
+      }
+                           
+]
+
+const netInputFields = document.querySelectorAll('.wcpPONo, #wpd-net-place-order,  #datepicker, #wcpbillingEmail,.wcpShippingInst, .extraFiedContainer > *, .net-notes, #wpd_net_order_content_wrapper select.wpd-primary-text-color, #wpd_net_order_content_wrapper input.wpd-primary-text-color, #wpd_net_order_content_wrapper textarea.wpd-primary-text-color');
+
+function replaceTextOnPage(from, to) {
+    getAllTextNodes().forEach(function(node) {
+        node.nodeValue = node.nodeValue.replace(new RegExp(quote(from), 'g'), to);
+    });
+
+    function getAllTextNodes() {
+        var result = [];
+
+        (function scanSubTree(node) {
+            if (node.childNodes.length)
+                for (var i = 0; i < node.childNodes.length; i++)
+                    scanSubTree(node.childNodes[i]);
+            else if (node.nodeType == Node.TEXT_NODE)
+                result.push(node);
+        })(document);
+
+        return result;
+
+    }
+
+    function quote(str) {
+        return (str + '').replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1");
+    }
+  document.querySelector('#wpdFetchShippingRates').innerHTML = 'Hämta fraktpris'
+}
+
+translateData.forEach(item => {
+    replaceTextOnPage(item.English, item.Swedish);
+  setTimeout(()=>{
+           replaceTextOnPage(item.English, item.Swedish);
+          }, 2000)
+})
+
+netInputFields.forEach(field => {
+    console.log(field.placeholder)
+    translateData.forEach(item => {
+        if (item.English == field.placeholder) {
+            field.placeholder = item.Swedish
+     
+        }
+    })
+})
+
+    setTimeout(()=>{
+      netInputFields.forEach(field => {
+    console.log(field.placeholder)
+    translateData.forEach(item => {
+        if (item.English == field.placeholder) {
+            field.placeholder = item.Swedish
+     
+        }
+    })
+})
+    },2000)
+});
+
+</script>
+{% endif %}
+  {% endif %}
+<style>
+  .wpd-shipping-address + .wpd-available-shipping-msg {
+    display: none;
+  }
+
+  #wcp-wcpModal-container * {
+  font-family: "Harmonia Sans", sans-serif !important;
+}
+</style>
